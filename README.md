@@ -32,7 +32,7 @@ This is a work in progress, but I have a few game features planned:
 - refined upgrade system
 - increasing upgrade prices
 - auto clickers
-- Upgrade keyboard bindings (1, 2 ... )
+- keyboard bindings for upgrades (1, 2 ... )
 - options menu
 - achievements
 ___
