@@ -20,6 +20,9 @@ ___
 - four upgradable multiplier levels (+1, +4, +8, +10)
 - Totals count
 - Save / load
+
+>[!NOTE]
+> Save file will be stored as a ```.dat``` file in ```root``` dir. Save file is loaded upon launch. Delete ```save_data.dat``` file to reset the game.
 ___
 ### Planned Features
 
