@@ -63,7 +63,8 @@ class Events:
     def save_file(self):
         try:
             with open("save_data.dat", "wb") as file:
-                pickle.dump([self.count, self.multiplier, self.x1_count], file)
+                pickle.dump([self.count, self.multiplier, self.x1_count, self.x4_count,
+                             self.x8_count, self.x10_count], file)
                 save_label.pack(side="bottom")
                 self.totals()
         except FileNotFoundError as error_code:
@@ -72,10 +73,13 @@ class Events:
     def load_file(self):
         try:
             with open("save_data.dat", "rb") as file:
-                count, multiplier, x1 = pickle.load(file)
+                count, multiplier, x1, x4, x8, x10 = pickle.load(file)
                 self.count = count
                 self.multiplier = multiplier
                 self.x1_count = x1
+                self.x4_count = x4
+                self.x8_count = x8
+                self.x10_count = x10
                 clicker_count_var.set(self.count)
                 load_label.pack(side="bottom")
                 self.totals()
@@ -110,8 +114,8 @@ if __name__ == "__main__":
     clicker_count_var = ttk.IntVar()
     counter_label = ttk.Label(clicker_frame, textvariable=clicker_count_var, font="Verdana 24 bold")
     clicker = ttk.Button(clicker_frame, text="Click!", command=clicker_instance.counters)
-    clicker.bind('<Return>', lambda event: 'break')
-    clicker.bind('<Button-3>', lambda event: clicker_instance.counters())
+    clicker.bind("<Return>", lambda event: "break")
+    clicker.bind("<Button-3>", lambda event: clicker_instance.counters())
 
     # upgrade area
     upgrade_frame = ttk.Frame(root)
@@ -127,8 +131,8 @@ if __name__ == "__main__":
 
     # footer area
     footer_frame = ttk.Frame(root)
-    save_label = ttk.Label(footer_frame, text='Game saved!', font="Verdana 8")
-    load_label = ttk.Label(footer_frame, text='Game loaded!', font="Verdana 8")
+    save_label = ttk.Label(footer_frame, text="Game saved!", font="Verdana 8")
+    load_label = ttk.Label(footer_frame, text="Game loaded!", font="Verdana 8")
 
     # Main Area Package
     # Save/Load package
@@ -160,6 +164,7 @@ if __name__ == "__main__":
     upgrade_x4.config(state="disabled")
     upgrade_x8.config(state="disabled")
     upgrade_x10.config(state="disabled")
-
+    
+    clicker_instance.totals()
     clicker_instance.load_file()
     root.mainloop()
