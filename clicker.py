@@ -119,10 +119,14 @@ if __name__ == "__main__":
 
     # upgrade area
     upgrade_frame = ttk.Frame(root)
-    upgrade_x2 = ttk.Button(upgrade_frame, text="+1\n(100)", command=clicker_instance.upgrade_x1)
-    upgrade_x4 = ttk.Button(upgrade_frame, text="+4\n(1K)", command=clicker_instance.upgrade_x4)
-    upgrade_x8 = ttk.Button(upgrade_frame, text="+8\n(10K)", command=clicker_instance.upgrade_x8)
-    upgrade_x10 = ttk.Button(upgrade_frame, text="+10\n(100K)", command=clicker_instance.upgrade_x10)
+    upgrade_x2 = ttk.Button(upgrade_frame, text="+1 (c: 100)\n(Hotkey: F1)", command=clicker_instance.upgrade_x1)
+    clicker.bind("<F1>", lambda event: clicker_instance.upgrade_x1())
+    upgrade_x4 = ttk.Button(upgrade_frame, text="+4 (c: 1K)\n(Hotkey: F2)", command=clicker_instance.upgrade_x4)
+    clicker.bind("<F2>", lambda event: clicker_instance.upgrade_x4())
+    upgrade_x8 = ttk.Button(upgrade_frame, text="+8 (c: 10K)\n(Hotkey: F3)", command=clicker_instance.upgrade_x8)
+    clicker.bind("<F3>", lambda event: clicker_instance.upgrade_x8())
+    upgrade_x10 = ttk.Button(upgrade_frame, text="+10 (c: 100K)\n(Hotkey: F4)", command=clicker_instance.upgrade_x10)
+    clicker.bind("<F4>", lambda event: clicker_instance.upgrade_x10())
 
     # totals area
     totals_frame = ttk.Frame(root)
@@ -142,10 +146,10 @@ if __name__ == "__main__":
 
     # Upgrades Package
     upgrade_frame.grid(row=1, column=0, pady=50, padx=10, sticky="nsew")
-    upgrade_x2.pack(ipady=10, ipadx=55, pady=5)
+    upgrade_x2.pack(ipady=10, ipadx=60, pady=5)
     upgrade_x4.pack(ipady=10, ipadx=60, pady=5)
-    upgrade_x8.pack(ipady=10, ipadx=55, pady=5)
-    upgrade_x10.pack(ipady=10, ipadx=50, pady=5)
+    upgrade_x8.pack(ipady=10, ipadx=60, pady=5)
+    upgrade_x10.pack(ipady=10, ipadx=55, pady=5)
 
     # Clicker Package
     clicker_frame.grid(row=1, column=1, pady=50, padx=10, sticky="nsew")
