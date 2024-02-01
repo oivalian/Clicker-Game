@@ -17,9 +17,10 @@ _**Click, click, click! ...**_
 ___
 ### Current Game Features
 
-- four upgradable multiplier levels (+1, +4, +8, +10)
+- Four upgradable multiplier levels (+1, +4, +8, +10)
 - Totals count
 - Save / load
+- Hotkey functionality
 
 >[!NOTE]
 > Save file will be stored as a ```.dat``` file in ```root``` dir. Save file is loaded upon launch. Delete ```save_data.dat``` file to reset the game.
@@ -32,7 +33,6 @@ This is a work in progress, but I have a few game features planned:
 - refined upgrade system
 - increasing upgrade prices
 - auto clickers
-- keyboard bindings for upgrades (1, 2 ... )
 - options menu
 - achievements
 ___
