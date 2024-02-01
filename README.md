@@ -14,6 +14,9 @@ The more clicks you aquire, the more upgrades you can afford.
 Become a clickionaire!
 
 _**Click, click, click! ...**_
+
+<img width="300" alt="Small image of clicker game GUI" src="https://github.com/oivalian/Clicker-Game/assets/109859213/2ee52c7c-5b5f-478c-822a-1934c6d32f08">
+
 ___
 ### Current Game Features
 
