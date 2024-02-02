@@ -29,7 +29,7 @@ class Events:
         if self.count >= 100:
             self.count -= 100
             self.multiplier += 1
-            upgrade_x2.config(state="disabled") if self.count < 100 else None
+            upgrade_x1.config(state="disabled") if self.count < 100 else None
             clicker_count_var.set(self.count)
             self.totals()
 
@@ -38,7 +38,7 @@ class Events:
         if self.count >= 1000:
             self.count -= 1000
             self.multiplier += 10
-            upgrade_x4.config(state="disabled") if self.count < 1000 else None
+            upgrade_x10.config(state="disabled") if self.count < 1000 else None
             clicker_count_var.set(self.count)
             self.totals()
 
@@ -47,7 +47,7 @@ class Events:
         if self.count >= 10000:
             self.count -= 10000
             self.multiplier += 100
-            upgrade_x8.config(state="disabled") if self.count < 10000 else None
+            upgrade_x100.config(state="disabled") if self.count < 10000 else None
             clicker_count_var.set(self.count)
             self.totals()
 
@@ -56,7 +56,7 @@ class Events:
         if self.count >= 100000:
             self.count -= 100000
             self.multiplier += 100
-            upgrade_x10.config(state="disabled") if self.count < 100000 else None
+            upgrade_x1000.config(state="disabled") if self.count < 100000 else None
             clicker_count_var.set(self.count)
             self.totals()
 
