@@ -1,6 +1,7 @@
 import ttkbootstrap as ttk
 import pickle
-
+import time
+import threading
 
 class Events:
     def __init__(self):
@@ -60,6 +61,34 @@ class Events:
             clicker_count_var.set(self.count)
             self.totals()
 
+    def auto_clicker_threader(self):
+        clicker_threader = threading.Thread(target=self.auto_clicker)
+        clicker_threader.start()
+
+    def cooldown_threader(self):
+        cooldown_threader = threading.Thread(target=self.auto_clicker_cooldown)
+        cooldown_threader.start()
+
+    def auto_clicker(self):
+        timer = 10
+        end_timer = time.time() + timer
+        while time.time() < end_timer:
+            self.counters()
+            clicker_count_var.set(self.count)
+            time.sleep(0.1)
+            auto_clicker.config(state="disabled")
+        self.cooldown_threader()
+
+    def auto_clicker_cooldown(self):
+        cooldown = 120
+        while cooldown > 0:
+            cooldown -= 1
+            time.sleep(1)
+            cooldown_var.set(cooldown)
+        auto_clicker.config(state="enabled") if cooldown == 0 else auto_clicker.config(state="disabled")
+        cooldown = 120 if cooldown == 0 else None
+        cooldown_var.set(cooldown)
+
     def save_file(self):
         try:
             with open("save_data.dat", "wb") as file:
@@ -100,6 +129,7 @@ if __name__ == "__main__":
 
     # root
     root = ttk.Window(themename="darkly")
+    root.title("Clicker Game")
     root.geometry("")
     root.resizable(0,0)
 
@@ -127,6 +157,10 @@ if __name__ == "__main__":
     clicker.bind("<F3>", lambda event: clicker_instance.upgrade_x100())
     upgrade_x1000 = ttk.Button(upgrade_frame, text="+1K (c: 100K)\n(Hotkey: F4)", command=clicker_instance.upgrade_x1000)
     clicker.bind("<F4>", lambda event: clicker_instance.upgrade_x1000())
+    auto_clicker = ttk.Button(upgrade_frame, text="Auto Clicker (10s)\n(Hotkey: F9)", command=clicker_instance.auto_clicker_threader)
+    clicker.bind("<F9>", lambda event: clicker_instance.auto_clicker_threader())
+    cooldown_var = ttk.IntVar()
+    cooldown_label = ttk.Label(upgrade_frame, textvariable=cooldown_var, font="Verdana 8")
 
     # totals area
     totals_frame = ttk.Frame(root)
@@ -150,6 +184,8 @@ if __name__ == "__main__":
     upgrade_x10.pack(ipady=10, ipadx=60, pady=5)
     upgrade_x100.pack(ipady=10, ipadx=55, pady=5)
     upgrade_x1000.pack(ipady=10, ipadx=55, pady=5)
+    auto_clicker.pack(ipady=10, ipadx=40, pady=5)
+    cooldown_label.pack()
 
     # Clicker Package
     clicker_frame.grid(row=1, column=1, pady=50, padx=10, sticky="nsew")
@@ -168,7 +204,9 @@ if __name__ == "__main__":
     upgrade_x10.config(state="disabled")
     upgrade_x100.config(state="disabled")
     upgrade_x1000.config(state="disabled")
+    auto_clicker.config(state="disabled")
     
     clicker_instance.totals()
     clicker_instance.load_file()
+    clicker_instance.cooldown_threader()
     root.mainloop()
