@@ -21,6 +21,7 @@ ___
 ### Current Game Features
 
 - Four upgradable multiplier levels (+1, +4, +8, +10)
+- Timed Autoclicker
 - Totals count
 - Save / load
 - Hotkey functionality
@@ -35,7 +36,6 @@ This is a work in progress, but I have a few game features planned:
 - four more upgrades
 - refined upgrade system
 - increasing upgrade prices
-- auto clickers
 - options menu
 - achievements
 ___
