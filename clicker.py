@@ -31,44 +31,43 @@ class Events:
         clicker_count_var.set(self.count)
         self.totals()
 
-    def upgrade(self, count, cost, multiplier):
+    def upgrade(self, button, count, cost, multiplier):
         count_total = getattr(self, f"x{count}_count")
         if self.count >= cost:
             self.count -= cost
             self.multiplier += multiplier
             count_total += 1
             setattr(self, f"x{count}_count", count_total)
-            upgrade_button = getattr(self, f"upgrade_x{count}")
-            upgrade_button.config(state="disabled") if self.count <= cost else None
+            button.config(state="disabled") if self.count <= cost else None
             clicker_count_var.set(self.count)
             self.totals()
 
     def upgrade_x1(self):
-        self.upgrade(1, 100, 1)
+        self.upgrade(upgrade_x1, 1, 100, 1)
 
     def upgrade_x10(self):
-        self.upgrade(10, 1000, 10)
+        self.upgrade(upgrade_x10, 10, 1000, 10)
 
     def upgrade_x100(self):
-        self.upgrade(100, 10000, 100)
+        self.upgrade(upgrade_x100, 100, 10000, 100)
 
     def upgrade_x1000(self):
-        self.upgrade(1000, 100000, 1000)
+        self.upgrade(upgrade_x1000, 1000, 100000, 1000)
 
     def upgrade_x10000(self):
-        self.upgrade(10000, 1000000, 10000)
+        self.upgrade(upgrade_x10000, 10000, 1000000, 10000)
 
     def upgrade_x100000(self):
-        self.upgrade(100000, 10000000, 100000)
+        self.upgrade(upgrade_x100000, 100000, 10000000, 100000)
 
     def upgrade_x1000000(self):
-        self.upgrade(1000000, 100000000, 1000000)
+        self.upgrade(upgrade_x1000000, 1000000, 100000000, 1000000)
 
     def upgrade_x10000000(self):
-        self.upgrade(10000000, 1000000000, 10000000)
+        self.upgrade(upgrade_x10000000, 10000000, 1000000000, 10000000)
 
     def upgrade_x100000000(self):
-        self.upgrade(100000000, 10000000000, 100000000)
+        self.upgrade(upgrade_x100000000, 100000000, 10000000000, 100000000)
 
     def auto_clicker_threader(self):
         clicker_threader = threading.Thread(target=self.auto_clicker)
