@@ -15,13 +15,13 @@ Become a clickionaire!
 
 _**Click, click, click! ...**_
 
-<img width="300" alt="Small image of clicker game GUI" src="https://github.com/oivalian/Clicker-Game/assets/109859213/2ee52c7c-5b5f-478c-822a-1934c6d32f08">
+<img width="400" alt="Screenshot 2024-02-09 162819" src="https://github.com/oivalian/Clicker-Game/assets/109859213/3823baba-a8b2-42c9-9283-20e03fecd48a">
 
 ___
 ### Current Game Features
 
-- Four upgradable multiplier levels (+1, +4, +8, +10)
-- Timed Autoclicker
+- Nine upgradable multiplier levels (+1, +4, +8, +10, +100, +1K, +10K, +100K, +1M, +10M, +100M)
+- Timed Autoclicker (120s cooldown)
 - Totals count
 - Save / load
 - Hotkey functionality
@@ -33,7 +33,6 @@ ___
 
 This is a work in progress, but I have a few game features planned:
 
-- four more upgrades
 - refined upgrade system
 - increasing upgrade prices
 - options menu
