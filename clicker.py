@@ -3,6 +3,7 @@ import pickle
 import time
 import threading
 
+
 class Events:
     def __init__(self):
         self.count = 0
@@ -125,33 +126,31 @@ class Events:
                 clicker_count_var.set(self.count)
                 load_label.pack(side="bottom")
                 self.totals()
-        except FileNotFoundError as error_code:
-            print(error_code)
-        except ValueError as error_code:
-            print(error_code)
-        except EOFError as error_code:
+        except (FileNotFoundError, ValueError, EOFError) as error_code:
             print(error_code)
 
     def totals(self):
-        x1_lbl.config(text=f"Total +1 = {self.x1_count}")
-        x10_lbl.config(text=f"Total +10 = {self.x10_count}")
-        x100_lbl.config(text=f"Total +100 = {self.x100_count}")
-        x1000_lbl.config(text=f"Total +1K = {self.x1000_count}")
-        x10000_lbl.config(text=f"Total +10K = {self.x10000_count}")
-        x100000_lbl.config(text=f"Total +100K = {self.x100000_count}")
-        x1000000_lbl.config(text=f"Total +1M = {self.x1000000_count}")
-        x10000000_lbl.config(text=f"Total +10M = {self.x10000000_count}")
-        x100000000_lbl.config(text=f"Total +100M = {self.x100000000_count}")
-        totals_lbl.config(text=f"Total Clicks = {self.multiplier}")
+        totals = [
+            (x1_lbl, self.x1_count, "+1"),
+            (x10_lbl, self.x10_count, "+10"),
+            (x100_lbl, self.x100_count, "+100"),
+            (x1000_lbl, self.x1000_count, "+1K"),
+            (x10000_lbl, self.x1000_count, "+10K"),
+            (x100000_lbl, self.x10000_count, "+100K"),
+            (x1000000_lbl, self.x1000000_count, "+1M"),
+            (x10000000_lbl, self.x1000000_count, "+10M"),
+            (x100000000_lbl, self.x10000000_count, "+100M"),
+            (totals_lbl, self.multiplier, "Clicks")]
+        for lbl, multiplier, total in totals:
+            lbl.config(text=f"Total {total} = {multiplier}")
 
 
 if __name__ == "__main__":
-
     # root
     root = ttk.Window(themename="darkly")
     root.title("Clicker Game")
     root.geometry("")
-    root.resizable(0,0)
+    root.resizable(0, 0)
 
     # save/load
     options_frame = ttk.Frame(root)
@@ -170,15 +169,21 @@ if __name__ == "__main__":
     upgrade_x1 = ttk.Button(upgrade_frame, text="+1 (c: 100)\n(Hotkey: F1)", command=clicker_instance.upgrade_x1)
     upgrade_x10 = ttk.Button(upgrade_frame, text="+10 (c: 1K)\n(Hotkey: F2)", command=clicker_instance.upgrade_x10)
     upgrade_x100 = ttk.Button(upgrade_frame, text="+100 (c: 10K)\n(Hotkey: F3)", command=clicker_instance.upgrade_x100)
-    upgrade_x1000 = ttk.Button(upgrade_frame, text="+1K (c: 100K)\n(Hotkey: F4)", command=clicker_instance.upgrade_x1000)
+    upgrade_x1000 = ttk.Button(upgrade_frame, text="+1K (c: 100K)\n(Hotkey: F4)",
+                               command=clicker_instance.upgrade_x1000)
     upgrade_x10000 = ttk.Button(upgrade_frame, text="10K (c: 1M)\n Hotkey: F5", command=clicker_instance.upgrade_x10000)
-    upgrade_x100000 = ttk.Button(upgrade_frame, text="100K (c: 10M)\n Hotkey: F6", command=clicker_instance.upgrade_x100000)
-    upgrade_x1000000 = ttk.Button(upgrade_frame, text="+1M (c: 100M)\n(Hotkey: F7)", command=clicker_instance.upgrade_x1000000)
-    upgrade_x10000000 = ttk.Button(upgrade_frame, text="+10M (c: 1B)\n(Hotkey: F8)", command=clicker_instance.upgrade_x10000000)
-    upgrade_x100000000 = ttk.Button(upgrade_frame, text="+100M (c: 10B)\n(Hotkey: F9)", command=clicker_instance.upgrade_x100000000)
+    upgrade_x100000 = ttk.Button(upgrade_frame, text="100K (c: 10M)\n Hotkey: F6",
+                                 command=clicker_instance.upgrade_x100000)
+    upgrade_x1000000 = ttk.Button(upgrade_frame, text="+1M (c: 100M)\n(Hotkey: F7)",
+                                  command=clicker_instance.upgrade_x1000000)
+    upgrade_x10000000 = ttk.Button(upgrade_frame, text="+10M (c: 1B)\n(Hotkey: F8)",
+                                   command=clicker_instance.upgrade_x10000000)
+    upgrade_x100000000 = ttk.Button(upgrade_frame, text="+100M (c: 10B)\n(Hotkey: F9)",
+                                    command=clicker_instance.upgrade_x100000000)
 
     # auto clicker
-    auto_clicker = ttk.Button(upgrade_frame, text="Auto Clicker (25s)\n(Hotkey: F10)", command=clicker_instance.auto_clicker_threader)
+    auto_clicker = ttk.Button(upgrade_frame, text="Auto Clicker (25s)\n(Hotkey: F10)",
+                              command=clicker_instance.auto_clicker_threader)
     cooldown_var = ttk.IntVar()
     cooldown_label = ttk.Label(upgrade_frame, textvariable=cooldown_var, font="Verdana 8")
     timer_counter_var = ttk.IntVar()
@@ -199,18 +204,23 @@ if __name__ == "__main__":
     load_button.pack(side="right", ipady=5, ipadx=5, pady=10, padx=10)
 
     # Upgrades Package
+    # upgrade buttons configuration
     upgrade_frame.grid(row=1, column=0, pady=50, padx=50, sticky="nsew")
-    upgrade_x1.grid(row=0, column=0, ipady=10, ipadx=60, pady=10, padx=10)
-    upgrade_x10.grid(row=1, column=0, ipady=10, ipadx=60, pady=10, padx=10)
-    upgrade_x100.grid(row=2, column=0, ipady=10, ipadx=55, pady=10, padx=10)
-    upgrade_x1000.grid(row=3, column=0, ipady=10, ipadx=55, pady=10, padx=10)
-    upgrade_x10000.grid(row=4, column=0, ipady=10, ipadx=62, pady=10, padx=10)
-    upgrade_x100000.grid(row=0, column=2, ipady=10, ipadx=55, pady=10, padx=10)
-    upgrade_x1000000.grid(row=1, column=2, ipady=10, ipadx=50, pady=10, padx=10)
-    upgrade_x10000000.grid(row=2, column=2, ipady=10, ipadx=57, pady=10, padx=10)
-    upgrade_x100000000.grid(row=3, column=2, ipady=10, ipadx=47, pady=10, padx=10)
-    auto_clicker.grid(row=4, column=2, ipady=10, ipadx=38, pady=10, padx=10)
-    cooldown_label.grid(row=4, column=2, sticky="se")
+    upgrade_package = {upgrade_x1: [0, 0],
+                       upgrade_x10: [1, 0],
+                       upgrade_x100: [2, 0],
+                       upgrade_x1000: [3, 0],
+                       upgrade_x10000: [4, 0],
+                       upgrade_x100000: [0, 1],
+                       upgrade_x1000000: [1, 1],
+                       upgrade_x10000000: [2, 1],
+                       upgrade_x100000000: [3, 1],
+                       auto_clicker: [4, 1]}
+
+    for upgrade_button, (row, col) in upgrade_package.items():  # treat upgrade as upgrade button - [X, X] as (row, col)
+        upgrade_button.grid(row=row, column=col, ipady=10, ipadx=50, pady=10, padx=10)
+        upgrade_button.config(width=10)        # sets button width to 10
+    cooldown_label.grid(row=4, column=1, sticky="se")
 
     # Clicker Package
     clicker_frame.grid(row=1, column=1, pady=50, padx=50, sticky="nsew")
@@ -219,6 +229,7 @@ if __name__ == "__main__":
 
     # Totals Package
     totals_frame.grid(row=2, column=0, columnspan=2, pady=10, padx=50, sticky="nsew")
+
     x1_lbl = ttk.Label(totals_frame, text=f"Total +1 = {clicker_instance.x1_count}")
     x10_lbl = ttk.Label(totals_frame, text=f"Total +10 = {clicker_instance.x10_count}")
     x100_lbl = ttk.Label(totals_frame, text=f"Total +100 = {clicker_instance.x100_count}")
@@ -229,44 +240,37 @@ if __name__ == "__main__":
     x10000000_lbl = ttk.Label(totals_frame, text=f"Total +10M = {clicker_instance.x10000000_count}")
     x100000000_lbl = ttk.Label(totals_frame, text=f"Total +100M = {clicker_instance.x100000000_count}")
     totals_lbl = ttk.Label(totals_frame, text=f"Total Clicks = {clicker_instance.multiplier}")
-    x1_lbl.grid(row=1, column=0, pady=10, padx=30, sticky="w")
-    x10_lbl.grid(row=1, column=1, pady=10, padx=30, sticky="w")
-    x100_lbl.grid(row=1, column=2, pady=10, padx=30, sticky="w")
-    x1000_lbl.grid(row=1, column=3, pady=10, padx=30, sticky="w")
-    x10000_lbl.grid(row=1, column=4, pady=10, padx=30, sticky="w")
-    x100000_lbl.grid(row=2, column=0, pady=10, padx=30, sticky="w")
-    x1000000_lbl.grid(row=2, column=1, pady=10, padx=30, sticky="w")
-    x10000000_lbl.grid(row=2, column=2, pady=10, padx=30, sticky="w")
-    x100000000_lbl.grid(row=2, column=3, pady=10, padx=30, sticky="w")
-    totals_lbl.grid(row=3, columnspan=5, pady=10, padx=30, sticky="w")
+
+    count_package = {x1_lbl: [1, 0], x10_lbl: [1, 1], x100_lbl: [1, 2], x1000_lbl: [1, 3], x10000_lbl: [1, 4],
+                     x100000_lbl: [2, 0], x1000000_lbl: [2, 1], x10000000_lbl: [2, 2], x100000000_lbl: [2, 3],
+                     totals_lbl: [3, 0]}
+    for label, (row, col) in count_package.items():
+        label.grid(row=row, column=col, pady=10, padx=30, sticky="w")
 
     # Header Package
     header_frame.grid(row=3, column=0, columnspan=2, pady=20, padx=10, sticky="nsew")
 
-    # loop
-    upgrade_x1.config(state="disabled")
-    upgrade_x10.config(state="disabled")
-    upgrade_x100.config(state="disabled")
-    upgrade_x1000.config(state="disabled")
-    upgrade_x10000.config(state="disabled")
-    upgrade_x100000.config(state="disabled")
-    upgrade_x1000000.config(state="disabled")
-    upgrade_x10000000.config(state="disabled")
-    upgrade_x100000000.config(state="disabled")
-    auto_clicker.config(state="disabled")
+    # loop options
+    # Button state on launch - Sets as disabled
+    upgrades = [upgrade_x1, upgrade_x10, upgrade_x100, upgrade_x1000, upgrade_x10000,
+                upgrade_x100000, upgrade_x1000000, upgrade_x10000000, upgrade_x100000000, auto_clicker]
+    for buttons in upgrades:
+        buttons.config(state="disabled")
+
+    # key bindings
+    # upgrades
+    keys = {"F1": "upgrade_x1", "F2": "upgrade_x10", "F3": "upgrade_x100", "F4": "upgrade_x1000",
+            "F5": "upgrade_x10000", "F6": "upgrade_x100000", "F7": "upgrade_x1000000",
+            "F8": "upgrade_x10000000", "F9": "upgrade_x10000000"}
+    for key, function in keys.items():
+        clicker.bind(f"<{key}>", lambda event, func=function: getattr(clicker_instance, func)())
+
+    # others
     clicker.bind("<F10>", lambda event: clicker_instance.auto_clicker_threader())
     clicker.bind("<Return>", lambda event: "break")
     clicker.bind("<Button-3>", lambda event: clicker_instance.counters())
-    clicker.bind("<F1>", lambda event: clicker_instance.upgrade_x1() if clicker_instance.count >= 100 else "break")
-    clicker.bind("<F2>", lambda event: clicker_instance.upgrade_x10() if clicker_instance.count >= 1000 else "break")
-    clicker.bind("<F3>", lambda event: clicker_instance.upgrade_x100() if clicker_instance.count >= 10000 else "break")
-    clicker.bind("<F4>", lambda event: clicker_instance.upgrade_x1000() if clicker_instance.count >= 100000 else "break")
-    clicker.bind("<F5>", lambda event: clicker_instance.upgrade_x10000() if clicker_instance.count >= 1000000 else "break")
-    clicker.bind("<F6>", lambda event: clicker_instance.upgrade_x100000() if clicker_instance.count >= 10000000 else "break")
-    clicker.bind("<F7>", lambda event: clicker_instance.upgrade_x1000000() if clicker_instance.count >= 100000000 else "break")
-    clicker.bind("<F8>", lambda event: clicker_instance.upgrade_x10000000() if clicker_instance.count >= 1000000000 else "break")
-    clicker.bind("<F9>", lambda event: clicker_instance.upgrade_x100000000() if clicker_instance.count >= 10000000000 else "break")
-    
+
+
     clicker_instance.totals()
     clicker_instance.load_file()
     clicker_instance.cooldown_threader()
