@@ -131,18 +131,16 @@ class Events:
 
     def totals(self):
         totals = [
-            (x1_lbl, self.x1_count, "+1"),
-            (x10_lbl, self.x10_count, "+10"),
-            (x100_lbl, self.x100_count, "+100"),
-            (x1000_lbl, self.x1000_count, "+1K"),
-            (x10000_lbl, self.x1000_count, "+10K"),
-            (x100000_lbl, self.x10000_count, "+100K"),
-            (x1000000_lbl, self.x1000000_count, "+1M"),
-            (x10000000_lbl, self.x1000000_count, "+10M"),
-            (x100000000_lbl, self.x10000000_count, "+100M"),
-            (totals_lbl, self.multiplier, "Clicks")]
-        for lbl, multiplier, total in totals:
-            lbl.config(text=f"Total {total} = {multiplier}")
+            (x1_lbl, self.x1_count, "+1"), (x10_lbl, self.x10_count, "+10"), (x100_lbl, self.x100_count, "+100"),
+            (x1000_lbl, self.x1000_count, "+1K"), (x10000_lbl, self.x1000_count, "+10K"),
+            (x100000_lbl, self.x10000_count, "+100K"), (x1000000_lbl, self.x1000000_count, "+1M"),
+            (x10000000_lbl, self.x1000000_count, "+10M"), (x100000000_lbl, self.x10000000_count, "+100M"),
+            (totals_lbl, self.multiplier, "Clicks"),]
+        try:
+            for lbl, multiplier, total in totals:
+                lbl.config(text=f"Total {total} = {multiplier}")
+        except ValueError as error_code:
+            print(error_code)
 
 
 if __name__ == "__main__":
@@ -206,16 +204,9 @@ if __name__ == "__main__":
     # Upgrades Package
     # upgrade buttons configuration
     upgrade_frame.grid(row=1, column=0, pady=50, padx=50, sticky="nsew")
-    upgrade_package = {upgrade_x1: [0, 0],
-                       upgrade_x10: [1, 0],
-                       upgrade_x100: [2, 0],
-                       upgrade_x1000: [3, 0],
-                       upgrade_x10000: [4, 0],
-                       upgrade_x100000: [0, 1],
-                       upgrade_x1000000: [1, 1],
-                       upgrade_x10000000: [2, 1],
-                       upgrade_x100000000: [3, 1],
-                       auto_clicker: [4, 1]}
+    upgrade_package = {upgrade_x1: [0, 0], upgrade_x10: [1, 0], upgrade_x100: [2, 0], upgrade_x1000: [3, 0],
+                       upgrade_x10000: [4, 0], upgrade_x100000: [0, 1], upgrade_x1000000: [1, 1],
+                       upgrade_x10000000: [2, 1], upgrade_x100000000: [3, 1], auto_clicker: [4, 1]}
 
     for upgrade_button, (row, col) in upgrade_package.items():  # treat upgrade as upgrade button - [X, X] as (row, col)
         upgrade_button.grid(row=row, column=col, ipady=10, ipadx=50, pady=10, padx=10)
@@ -244,6 +235,8 @@ if __name__ == "__main__":
     count_package = {x1_lbl: [1, 0], x10_lbl: [1, 1], x100_lbl: [1, 2], x1000_lbl: [1, 3], x10000_lbl: [1, 4],
                      x100000_lbl: [2, 0], x1000000_lbl: [2, 1], x10000000_lbl: [2, 2], x100000000_lbl: [2, 3],
                      totals_lbl: [3, 0]}
+
+
     for label, (row, col) in count_package.items():
         label.grid(row=row, column=col, pady=10, padx=30, sticky="w")
 
@@ -265,11 +258,11 @@ if __name__ == "__main__":
     for key, function in keys.items():
         clicker.bind(f"<{key}>", lambda event, func=function: getattr(clicker_instance, func)())
 
+
     # others
     clicker.bind("<F10>", lambda event: clicker_instance.auto_clicker_threader())
     clicker.bind("<Return>", lambda event: "break")
     clicker.bind("<Button-3>", lambda event: clicker_instance.counters())
-
 
     clicker_instance.totals()
     clicker_instance.load_file()
